@@ -11,7 +11,7 @@ use BEAR\Package\PackageModule;
 use BookManager\Domain\Repository\BookRepository;
 use BookManager\Infrastructure\Database\BookRepositoryImpl;
 use BookManager\Service\Book\GetBooksUsecase;
-use MyVendor\MyProject\Resource\App\Book;
+use Ray\AuraSqlModule\AuraSqlModule;
 use function dirname;
 
 class AppModule extends AbstractAppModule
@@ -25,6 +25,11 @@ class AppModule extends AbstractAppModule
     $this->bind(GetBooksUsecase::class)
       ->to(GetBooksUsecase::class);
 
+    $this->install(new AuraSqlModule(
+        $_ENV['DATABASE_DSN'],
+        $_ENV['DATABASE_USER'],
+        $_ENV['DATABASE_PASS'],
+    ));
 
     $this->install(new PackageModule());
   }
